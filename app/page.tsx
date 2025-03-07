@@ -1,6 +1,10 @@
 'use client';
+import loadingAnimation from '@/public/loading.json';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
+
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 export default function Home() {
   const router = useRouter();
@@ -48,13 +52,17 @@ export default function Home() {
 
   // Loading modal component
   const LoadingModal = () => (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 text-center">
-        <img
-          src="/loading.gif"
-          alt="Loading"
-          className="w-24 h-24 mx-auto mb-4"
-        />
+    <div className="fixed inset-0 bg-white/60 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="bg-white/90 rounded-2xl p-8 max-w-sm w-full mx-4 text-center shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+        <div className="w-24 h-24 mx-auto mb-4">
+          <Suspense fallback={<div className="w-24 h-24" />}>
+            <Lottie
+              animationData={loadingAnimation}
+              loop={true}
+              style={{ width: '100%', height: '100%' }}
+            />
+          </Suspense>
+        </div>
         <p className="text-lg font-medium text-[#584848]">
           이상형 분석중입니다...
         </p>
@@ -111,7 +119,7 @@ export default function Home() {
           {/* 성별 토글 */}
           <div className="flex flex-col gap-3">
             <label className="font-medium text-[#584848]">성별</label>
-            <div className="flex gap-4 justify-center">
+            <div className="flex gap-4 ">
               {['여성', '남성'].map((gender) => (
                 <label
                   key={gender}
