@@ -66,20 +66,33 @@ function ResultData() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <div className="flex justify-center">
-        <Image src="/couple2.png" alt="MBTI" width={100} height={100} />
+        <Image
+          src="/couple2.png"
+          alt="MBTI"
+          width={150}
+          height={150}
+          quality={100}
+          priority
+          className="w-[80px] h-[80px] md:w-[150px] md:h-[150px] object-contain"
+        />
       </div>
       <Suspense fallback={<div>Loading...</div>}>
         <ResultContent />
       </Suspense>
-      <div className="w-full h-[400px] my-8">
+      <div className="w-full h-[300px] md:h-[400px] my-4 md:my-8">
         <ResponsiveContainer width="100%" height="100%">
-          <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data}>
+          <RadarChart cx="50%" cy="50%" outerRadius="75%" data={data}>
             <PolarGrid />
             <PolarAngleAxis
               dataKey="name"
-              tick={{ fill: '#666', fontSize: 14 }}
+              tick={{
+                fill: '#666',
+                fontSize: '12px',
+                dy: 3,
+              }}
+              className="text-xs md:text-base"
             />
             <PolarRadiusAxis angle={90} domain={[0, 5]} tickCount={6} />
             <Radar
@@ -92,20 +105,20 @@ function ResultData() {
           </RadarChart>
         </ResponsiveContainer>
       </div>
-      <div className="pt-4 space-y-4">
+      <div className="pt-2 md:pt-4 space-y-3 md:space-y-4">
         <Link
           href="/"
-          className="block w-full bg-[#F3E2D3] hover:bg-[#ebd3c0] text-[#584848] font-bold py-4 px-6 rounded-2xl 
+          className="block w-full bg-[#F3E2D3] hover:bg-[#ebd3c0] text-[#584848] font-bold py-3 md:py-4 px-4 md:px-6 rounded-xl md:rounded-2xl 
             transition-all duration-200 ease-in-out transform hover:scale-[1.02] hover:shadow-lg
-            text-center"
+            text-center text-sm md:text-base"
         >
           메인으로 돌아가기
         </Link>
         <button
           onClick={handleShare}
-          className="block w-full bg-[#584848] hover:bg-[#463939] text-white font-bold py-4 px-6 rounded-2xl 
+          className="block w-full bg-[#584848] hover:bg-[#463939] text-white font-bold py-3 md:py-4 px-4 md:px-6 rounded-xl md:rounded-2xl 
             transition-all duration-200 ease-in-out transform hover:scale-[1.02] hover:shadow-lg
-            text-center"
+            text-center text-sm md:text-base"
         >
           결과 공유하기
         </button>
@@ -117,8 +130,8 @@ function ResultData() {
 // 메인 Result 컴포넌트를 Suspense로 감싸서 반환
 export default function Result() {
   return (
-    <div className="min-h-screen max-w-2xl mx-auto p-6 sm:p-8">
-      <div className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-8">
+    <div className="min-h-screen max-w-2xl mx-auto p-4 md:p-8">
+      <div className="bg-white rounded-2xl md:rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-4 md:p-8">
         <Suspense fallback={<div>Loading...</div>}>
           <ResultData />
         </Suspense>
@@ -149,21 +162,47 @@ function ResultContent() {
       <p
         key={index}
         className={`
-      ${line.startsWith('📌') ? 'text-xl font-bold mb-4' : ''}
-      ${line.startsWith('✅') ? 'text-lg mb-2' : ''}
-      ${line.startsWith('📊') ? 'text-xl font-bold mt-6 mb-4' : ''}
-      ${line.startsWith('          ') ? 'ml-8 mb-2' : ''}
-      ${line.startsWith('💡') ? 'text-xl font-bold mt-6 mb-4' : ''}
-      ${line.startsWith('•') ? 'ml-4 mb-2' : ''}
-      ${line.startsWith('🔍') ? 'text-xl font-bold mt-6 mb-4' : ''}
-      ${line.startsWith('🔮') ? 'text-xl font-bold mt-6 mb-4' : ''}
-      ${line.startsWith('💔') ? 'text-xl font-bold mt-6 mb-4' : ''}
-
+      ${
+        line.startsWith('📌') ? 'text-lg md:text-xl font-bold mb-3 md:mb-4' : ''
+      }
+      ${line.startsWith('✅') ? 'text-base md:text-lg mb-2' : ''}
+      ${
+        line.startsWith('📊')
+          ? 'text-lg md:text-xl font-bold mt-5 md:mt-6 mb-3 md:mb-4'
+          : ''
+      }
+      ${
+        line.startsWith('          ')
+          ? 'ml-4 md:ml-8 mb-2 text-sm md:text-base'
+          : ''
+      }
+      ${
+        line.startsWith('💡')
+          ? 'text-lg md:text-xl font-bold mt-5 md:mt-6 mb-3 md:mb-4'
+          : ''
+      }
+      ${line.startsWith('•') ? 'ml-3 md:ml-4 mb-2 text-sm md:text-base' : ''}
+      ${
+        line.startsWith('🔍')
+          ? 'text-lg md:text-xl font-bold mt-5 md:mt-6 mb-3 md:mb-4'
+          : ''
+      }
+      ${
+        line.startsWith('🔮')
+          ? 'text-lg md:text-xl font-bold mt-5 md:mt-6 mb-3 md:mb-4'
+          : ''
+      }
+      ${
+        line.startsWith('💔')
+          ? 'text-lg md:text-xl font-bold mt-5 md:mt-6 mb-3 md:mb-4'
+          : ''
+      }
+      text-sm md:text-base
     `}
       >
         {line}
       </p>
     ));
 
-  return <div className="space-y-2">{formattedResult}</div>;
+  return <div className="space-y-1 md:space-y-2">{formattedResult}</div>;
 }
