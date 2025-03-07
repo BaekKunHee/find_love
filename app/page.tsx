@@ -65,7 +65,7 @@ export default function Home() {
           </Suspense>
         </div>
         <p className="text-lg font-medium text-[#584848]">
-          이상형 분석중입니다...
+          나는 왜 솔로인지 분석중입니다...
         </p>
         <p className="text-sm text-gray-500 mt-2">잠시만 기다려주세요</p>
       </div>
@@ -135,7 +135,7 @@ export default function Home() {
         <form className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-4 sm:p-6 md:p-8 space-y-6 md:space-y-8">
           <div className="space-y-4 md:space-y-6">
             <h1 className="font-jalnan text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-[#584848]">
-              ✨ MBTI기반 AI 이상형 검사 💝
+              ✨ 나는 왜 SOLO? 🧐
             </h1>
 
             {/* 이미지 */}
@@ -275,7 +275,7 @@ export default function Home() {
                   flex items-center justify-center gap-2 text-sm sm:text-base"
                 onClick={handleSubmit}
               >
-                <span>나의 이상형 찾기</span>
+                <span>내가 왜 솔로인지 알아보기</span>
                 <span className="text-lg sm:text-xl">💘</span>
               </button>
               <div className="text-center text-xs text-gray-500 mt-10">

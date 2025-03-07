@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'MBTI 이상형 검사',
-  description: 'MBTI 이상형 검사',
+  title: '나는 왜 SOLO?',
+  description: '나는 왜 SOLO?',
   openGraph: {
-    title: 'MBTI 이상형 검사',
-    description: 'MBTI 이상형 검사',
+    title: '나는 왜 SOLO?',
+    description: '내가 왜 SOLO인지 알려주는 유형검사',
     type: 'website',
     locale: 'ko_KR',
-    siteName: 'MBTI 이상형 검사',
+    siteName: '나는 왜 SOLO?',
   },
 };
 
