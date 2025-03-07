@@ -26,6 +26,10 @@ export default function Result() {
     <div className="min-h-screen max-w-2xl mx-auto p-6 sm:p-8">
       <div className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-8">
         <div className="space-y-6">
+          {/* 이미지 */}
+          <div className="flex justify-center">
+            <img src="/couple.png" alt="MBTI" className="w-32" />
+          </div>
           <div className="space-y-2">{formattedResult}</div>
           <div className="pt-4">
             <a
