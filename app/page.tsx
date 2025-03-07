@@ -73,6 +73,13 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // 폼 유효성 검사
+    if (!formData.age || !formData.mbti || !formData.datingStyle || !formData.values || !formData.hobbies) {
+      alert('모든 항목을 입력해주세요.');
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -118,10 +125,10 @@ export default function Home() {
             </div>
             {/* 이미지 */}
             <div className="flex justify-center">
-              <Image 
-                src="/couple.png" 
-                alt="MBTI" 
-                width={80} 
+              <Image
+                src="/couple.png"
+                alt="MBTI"
+                width={80}
                 height={80}
                 className="w-[80px] sm:w-[90px] md:w-[100px]"
               />
@@ -161,52 +168,66 @@ export default function Home() {
             </div>
 
             {/* Input fields */}
-            {['나이', 'MBTI', '연애스타일', '연애 가치관', '취미 & 관심사'].map((field) => (
-              <div key={field} className="flex flex-col gap-2 sm:gap-3">
-                <label className="font-jalnan font-medium text-[#584848] text-sm sm:text-base">
-                  {field}
-                </label>
-                {field === '나이' ? (
-                  <input
-                    type="number"
-                    name="age"
-                    value={formData.age}
-                    onChange={handleChange}
-                    className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all text-sm sm:text-base"
-                    placeholder="나이를 입력하세요"
-                  />
-                ) : field === 'MBTI' ? (
-                  <select
-                    name="mbti"
-                    value={formData.mbti}
-                    onChange={handleChange}
-                    className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all text-sm sm:text-base"
-                  >
-                    <option value="">MBTI 선택</option>
-                    {mbtiOptions.map((mbti) => (
-                      <option key={mbti} value={mbti}>
-                        {mbti}
-                      </option>
-                    ))}
-                  </select>
-                ) : (
-                  <textarea
-                    name={field === '연애스타일' ? 'datingStyle' : field === '연애 가치관' ? 'values' : 'hobbies'}
-                    value={
-                      field === '연애스타일'
-                        ? formData.datingStyle
-                        : field === '연애 가치관'
-                        ? formData.values
-                        : formData.hobbies
-                    }
-                    onChange={handleChange}
-                    className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all resize-none text-sm sm:text-base"
-                    placeholder={`${field}을(를) 입력하세요`}
-                    rows={3}
-                  />
-                )}
-              </div>
-            ))}
+            {['나이', 'MBTI', '연애스타일', '연애 가치관', '취미 & 관심사'].map(
+              (field) => (
+                <div key={field} className="flex flex-col gap-2 sm:gap-3">
+                  <label className="font-jalnan font-medium text-[#584848] text-sm sm:text-base">
+                    {field} <span className="text-red-500">*</span>
+                  </label>
+                  {field === '나이' ? (
+                    <input
+                      type="number"
+                      name="age"
+                      value={formData.age}
+                      onChange={handleChange}
+                      className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all text-sm sm:text-base"
+                      placeholder="나이를 입력하세요"
+                      required
+                      min="1"
+                      max="100"
+                    />
+                  ) : field === 'MBTI' ? (
+                    <select
+                      name="mbti"
+                      value={formData.mbti}
+                      onChange={handleChange}
+                      className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all text-sm sm:text-base"
+                      required
+                    >
+                      <option value="">MBTI 선택</option>
+                      {mbtiOptions.map((mbti) => (
+                        <option key={mbti} value={mbti}>
+                          {mbti}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <textarea
+                      name={
+                        field === '연애스타일'
+                          ? 'datingStyle'
+                          : field === '연애 가치관'
+                          ? 'values'
+                          : 'hobbies'
+                      }
+                      value={
+                        field === '연애스타일'
+                          ? formData.datingStyle
+                          : field === '연애 가치관'
+                          ? formData.values
+                          : formData.hobbies
+                      }
+                      onChange={handleChange}
+                      className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all resize-none text-sm sm:text-base"
+                      placeholder={`${field}을(를) 입력하세요`}
+                      rows={3}
+                      required
+                      minLength={2}
+                    />
+                  )}
+                </div>
+              )
+            )}
 
             {/* 제출 버튼 */}
             <div className="pt-2 sm:pt-4">
