@@ -106,19 +106,24 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[auto_1fr] min-h-screen max-w-2xl mx-auto p-6 sm:p-8">
       {isLoading && <LoadingModal />}
-      <h1 className="text-2xl md:text-4xl font-bold text-center mb-6 text-[#584848]">
-        ✨ MBTI기반 AI 이상형 검사 💝
-      </h1>
 
       <form className="bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] p-8 space-y-8">
         <div className="space-y-6">
+          <h1 className="font-jalnan text-1xl md:text-3xl font-bold text-center mb-6 text-[#584848]">
+            ✨ MBTI기반 AI 이상형 검사 💝
+          </h1>
+          <div className="text-center text-xs text-gray-500">
+            Copyright 2025. Han. All rights reserved.
+          </div>
           {/* 이미지 */}
           <div className="flex justify-center">
             <Image src="/couple.png" alt="MBTI" width={100} height={100} />
           </div>
           {/* 성별 토글 */}
           <div className="flex flex-col gap-3">
-            <label className="font-medium text-[#584848]">성별</label>
+            <label className="font-jalnan font-medium text-[#584848]">
+              성별
+            </label>
             <div className="flex gap-4 ">
               {['여성', '남성'].map((gender) => (
                 <label
@@ -149,7 +154,9 @@ export default function Home() {
 
           {/* 나이 */}
           <div className="flex flex-col gap-3">
-            <label className="font-medium text-[#584848]">나이</label>
+            <label className="font-jalnan font-medium text-[#584848]">
+              나이
+            </label>
             <input
               type="number"
               name="age"
@@ -162,7 +169,9 @@ export default function Home() {
 
           {/* MBTI 선택 */}
           <div className="flex flex-col gap-3">
-            <label className="font-medium text-[#584848]">MBTI</label>
+            <label className="font-jalnan font-medium text-[#584848]">
+              MBTI
+            </label>
             <select
               name="mbti"
               value={formData.mbti}
@@ -180,7 +189,9 @@ export default function Home() {
 
           {/* 연애스타일 */}
           <div className="flex flex-col gap-3">
-            <label className="font-medium text-[#584848]">연애스타일</label>
+            <label className="font-jalnan font-medium text-[#584848]">
+              연애스타일
+            </label>
             <textarea
               name="datingStyle"
               value={formData.datingStyle}
@@ -193,7 +204,9 @@ export default function Home() {
 
           {/* 연애 가치관 */}
           <div className="flex flex-col gap-3">
-            <label className="font-medium text-[#584848]">연애 가치관</label>
+            <label className="font-jalnan font-medium text-[#584848]">
+              연애 가치관
+            </label>
             <textarea
               name="values"
               value={formData.values}
@@ -206,7 +219,9 @@ export default function Home() {
 
           {/* 취미 & 관심사 */}
           <div className="flex flex-col gap-3">
-            <label className="font-medium text-[#584848]">취미 & 관심사</label>
+            <label className="font-jalnan font-medium text-[#584848]">
+              취미 & 관심사
+            </label>
             <textarea
               name="hobbies"
               value={formData.hobbies}
