@@ -1,6 +1,7 @@
 'use client';
 import loadingAnimation from '@/public/loading.json';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Suspense, useState } from 'react';
 
@@ -9,7 +10,6 @@ const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 export default function Home() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState('');
   const [formData, setFormData] = useState({
     gender: '여성',
     age: '',
@@ -114,7 +114,7 @@ export default function Home() {
         <div className="space-y-6">
           {/* 이미지 */}
           <div className="flex justify-center">
-            <img src="/couple.png" alt="MBTI" className="w-32" />
+            <Image src="/couple.png" alt="MBTI" width={100} height={100} />
           </div>
           {/* 성별 토글 */}
           <div className="flex flex-col gap-3">

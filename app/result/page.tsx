@@ -1,6 +1,7 @@
 'use client';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-
 export default function Result() {
   const searchParams = useSearchParams();
   const result = searchParams.get('result');
@@ -28,18 +29,18 @@ export default function Result() {
         <div className="space-y-6">
           {/* 이미지 */}
           <div className="flex justify-center">
-            <img src="/couple.png" alt="MBTI" className="w-32" />
+            <Image src="/couple2.png" alt="MBTI" width={100} height={100} />
           </div>
           <div className="space-y-2">{formattedResult}</div>
           <div className="pt-4">
-            <a
+            <Link
               href="/"
               className="block w-full bg-[#F3E2D3] hover:bg-[#ebd3c0] text-[#584848] font-bold py-4 px-6 rounded-2xl 
                 transition-all duration-200 ease-in-out transform hover:scale-[1.02] hover:shadow-lg
                 text-center"
             >
               메인으로 돌아가기
-            </a>
+            </Link>
           </div>
         </div>
       </div>
