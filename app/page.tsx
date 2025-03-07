@@ -65,7 +65,7 @@ export default function Home() {
           </Suspense>
         </div>
         <p className="text-lg font-medium text-[#584848]">
-          나는 왜 솔로인지 분석중입니다...
+          나는 왜 SOLO인지 분석중입니다...
         </p>
         <p className="text-sm text-gray-500 mt-2">잠시만 기다려주세요</p>
       </div>

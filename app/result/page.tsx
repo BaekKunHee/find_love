@@ -156,9 +156,9 @@ function ResultContent() {
       ${line.startsWith('💡') ? 'text-xl font-bold mt-6 mb-4' : ''}
       ${line.startsWith('•') ? 'ml-4 mb-2' : ''}
       ${line.startsWith('🔍') ? 'text-xl font-bold mt-6 mb-4' : ''}
-      ${line.startsWith('🌟') ? 'text-xl font-bold mt-6 mb-4' : ''}
-      ${line.startsWith('👀') ? 'text-xl font-bold mt-6 mb-4' : ''}
-      
+      ${line.startsWith('🔮') ? 'text-xl font-bold mt-6 mb-4' : ''}
+      ${line.startsWith('💔') ? 'text-xl font-bold mt-6 mb-4' : ''}
+
     `}
       >
         {line}
