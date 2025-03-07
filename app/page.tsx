@@ -17,6 +17,7 @@ export default function Home() {
     datingStyle: '',
     values: '',
     hobbies: '',
+    email: '',
   });
 
   const mbtiOptions = [
@@ -73,11 +74,26 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // 폼 유효성 검사
-    if (!formData.age || !formData.mbti || !formData.datingStyle || !formData.values || !formData.hobbies) {
+    if (
+      !formData.age ||
+      !formData.mbti ||
+      !formData.datingStyle ||
+      !formData.values ||
+      !formData.hobbies
+    ) {
       alert('모든 항목을 입력해주세요.');
       return;
+    }
+
+    // 이메일 유효성 검사 (이메일이 입력된 경우에만)
+    if (formData.email) {
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailRegex.test(formData.email)) {
+        alert('올바른 이메일 주소를 입력해주세요.');
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -98,7 +114,8 @@ export default function Home() {
         const data = await response.json();
         // URL encode the result and redirect to result page
         const encodedResult = encodeURIComponent(data.result);
-        router.push(`/result?result=${encodedResult}`);
+        const encodedScore = encodeURIComponent(JSON.stringify(data.score));
+        router.push(`/result?result=${encodedResult}&score=${encodedScore}`);
       } else {
         throw new Error('제출에 실패했습니다.');
       }
@@ -120,9 +137,7 @@ export default function Home() {
             <h1 className="font-jalnan text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-[#584848]">
               ✨ MBTI기반 AI 이상형 검사 💝
             </h1>
-            <div className="text-center text-xs text-gray-500">
-              Copyright 2025. Han. All rights reserved.
-            </div>
+
             {/* 이미지 */}
             <div className="flex justify-center">
               <Image
@@ -168,66 +183,88 @@ export default function Home() {
             </div>
 
             {/* Input fields */}
-            {['나이', 'MBTI', '연애스타일', '연애 가치관', '취미 & 관심사'].map(
-              (field) => (
-                <div key={field} className="flex flex-col gap-2 sm:gap-3">
-                  <label className="font-jalnan font-medium text-[#584848] text-sm sm:text-base">
-                    {field} <span className="text-red-500">*</span>
-                  </label>
-                  {field === '나이' ? (
-                    <input
-                      type="number"
-                      name="age"
-                      value={formData.age}
-                      onChange={handleChange}
-                      className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all text-sm sm:text-base"
-                      placeholder="나이를 입력하세요"
-                      required
-                      min="1"
-                      max="100"
-                    />
-                  ) : field === 'MBTI' ? (
-                    <select
-                      name="mbti"
-                      value={formData.mbti}
-                      onChange={handleChange}
-                      className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all text-sm sm:text-base"
-                      required
-                    >
-                      <option value="">MBTI 선택</option>
-                      {mbtiOptions.map((mbti) => (
-                        <option key={mbti} value={mbti}>
-                          {mbti}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <textarea
-                      name={
-                        field === '연애스타일'
-                          ? 'datingStyle'
-                          : field === '연애 가치관'
-                          ? 'values'
-                          : 'hobbies'
-                      }
-                      value={
-                        field === '연애스타일'
-                          ? formData.datingStyle
-                          : field === '연애 가치관'
-                          ? formData.values
-                          : formData.hobbies
-                      }
-                      onChange={handleChange}
-                      className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all resize-none text-sm sm:text-base"
-                      placeholder={`${field}을(를) 입력하세요`}
-                      rows={3}
-                      required
-                      minLength={2}
-                    />
+            {[
+              '나이',
+              'MBTI',
+              '연애스타일',
+              '연애 가치관',
+              '취미 & 관심사',
+              '이메일',
+            ].map((field) => (
+              <div key={field} className="flex flex-col gap-2 sm:gap-3">
+                <label className="font-jalnan font-medium text-[#584848] text-sm sm:text-base">
+                  {field}{' '}
+                  {field !== '이메일' && (
+                    <span className="text-red-500">*</span>
                   )}
-                </div>
-              )
-            )}
+                  {field === '이메일' && (
+                    <span className="text-sm font-normal text-gray-500 ml-2">
+                      (선택사항 - 입력시 결과를 이메일로도 전송해드립니다)
+                    </span>
+                  )}
+                </label>
+                {field === '나이' ? (
+                  <input
+                    type="number"
+                    name="age"
+                    value={formData.age}
+                    onChange={handleChange}
+                    className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all text-sm sm:text-base"
+                    placeholder="나이를 입력하세요"
+                    required
+                    min="1"
+                    max="100"
+                  />
+                ) : field === 'MBTI' ? (
+                  <select
+                    name="mbti"
+                    value={formData.mbti}
+                    onChange={handleChange}
+                    className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all text-sm sm:text-base"
+                    required
+                  >
+                    <option value="">MBTI 선택</option>
+                    {mbtiOptions.map((mbti) => (
+                      <option key={mbti} value={mbti}>
+                        {mbti}
+                      </option>
+                    ))}
+                  </select>
+                ) : field === '이메일' ? (
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all text-sm sm:text-base"
+                    placeholder="결과를 받아보실 이메일을 입력하세요"
+                  />
+                ) : (
+                  <textarea
+                    name={
+                      field === '연애스타일'
+                        ? 'datingStyle'
+                        : field === '연애 가치관'
+                        ? 'values'
+                        : 'hobbies'
+                    }
+                    value={
+                      field === '연애스타일'
+                        ? formData.datingStyle
+                        : field === '연애 가치관'
+                        ? formData.values
+                        : formData.hobbies
+                    }
+                    onChange={handleChange}
+                    className="p-2.5 sm:p-3 rounded-xl border border-gray-200 focus:border-[#F3E2D3] focus:ring-[#F3E2D3] focus:ring-2 outline-none transition-all resize-none text-sm sm:text-base"
+                    placeholder={`${field}을(를) 입력하세요`}
+                    rows={3}
+                    required
+                    minLength={2}
+                  />
+                )}
+              </div>
+            ))}
 
             {/* 제출 버튼 */}
             <div className="pt-2 sm:pt-4">
@@ -241,6 +278,9 @@ export default function Home() {
                 <span>나의 이상형 찾기</span>
                 <span className="text-lg sm:text-xl">💘</span>
               </button>
+              <div className="text-center text-xs text-gray-500 mt-10">
+                Copyright 2025. Han. All rights reserved.
+              </div>
             </div>
           </div>
         </form>
